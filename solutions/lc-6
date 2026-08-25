@@ -1,0 +1,28 @@
+class Solution {
+public:
+    string convert(string s, int numRows) {
+        if (numRows == 1) {
+            return s;
+        }
+
+        vector<string> rows(numRows);
+
+        int current = 0;
+        int dirc = -1;
+
+        for (char ch : s) {
+            rows[current] += ch;
+
+            if (current == 0 || current == numRows - 1) {
+                dirc = -dirc;
+            }
+            current += dirc;
+        }
+        string result;
+
+        for (const auto& row:rows) {
+            result += row;
+        }
+        return result;
+    }
+};
