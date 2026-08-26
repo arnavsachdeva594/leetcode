@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int frequency[128] = {0};
+        int maxlength = 0;
+        int stringlength = s.size();
+
+        int left = 0;
+        for (int right = 0; right < stringlength; ++right) {
+            ++frequency[s[right]];
+
+            while (frequency[s[right]] > 1) {
+                --frequency[s[left]];
+                ++left;
+            }
+
+            maxlength = max(maxlength, right - left + 1);
+        }
+        return maxlength;
+    }
+};
