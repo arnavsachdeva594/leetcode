@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string simplifyPath(string path) {
+        deque<string> directorystack;
+
+        stringstream pathstream(path);
+        string token;
+
+        while (getline(pathstream, token, '/')) {
+            if (token == "" || token == ".") {
+                continue;
+            }
+
+            if (token == "..") {
+                if (!directorystack.empty()) {
+                    directorystack.pop_back();
+                }
+            } else {
+                directorystack.push_back(token);
+            }
+        }
+
+        if (directorystack.empty()) {
+            return "/";
+        }
+
+        string simplifiedpath;
+        for (const auto& directory : directorystack) {
+            simplifiedpath += "/" + directory;
+        }
+        return simplifiedpath;
+    }
+};
