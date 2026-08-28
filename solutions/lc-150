@@ -1,0 +1,28 @@
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        stack<int> operandStack;
+
+        for (const auto& token:tokens) {
+            if (token.size() > 1 || isdigit(token[0])) {
+                operandStack.push(stoi(token));
+            } else {
+                int secondOperand = operandStack.top();
+                operandStack.pop();
+                int firstOperand = operandStack.top();
+                operandStack.pop();
+
+                if (token[0] == '+') {
+                    operandStack.push(firstOperand + secondOperand);
+                } else if (token[0] == '*') {
+                    operandStack.push(firstOperand * secondOperand);
+                } else if (token[0] == '-') {
+                    operandStack.push(firstOperand - secondOperand);
+                } else {
+                    operandStack.push(firstOperand / secondOperand);
+                }
+            }
+        }
+        return operandStack.top();
+    }
+};
