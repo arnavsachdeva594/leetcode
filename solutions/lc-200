@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int rows = grid.size();
+        int cols = grid[0].size();
+
+        int islands = 0;
+
+        int directions[5] = {-1, 0, 1, 0, -1};
+
+        function<void(int, int)> dfs = [&](int row, int col) {
+            grid[row][col] = '0';
+
+            for (int k = 0; k < 4; ++k) {
+                int nrow = row + directions[k];
+                int ncol = col + directions[k + 1];
+
+                if (nrow >= 0 && nrow < rows && ncol >= 0 && ncol < cols && grid[nrow][ncol] == '1') {
+                    dfs(nrow, ncol);
+                } 
+            }
+        };
+
+        for (int i = 0; i < rows; ++i) {
+            for (int j = 0; j < cols; ++j) {
+                if (grid[i][j] == '1') {
+                    dfs(i, j);
+                    ++islands;
+                }
+            }
+        }
+        return islands;
+    }
+};

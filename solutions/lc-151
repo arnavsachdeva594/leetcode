@@ -1,0 +1,37 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int readIndex = 0;     
+        int writeIndex = 0;   
+        int stringLength = s.size();
+      
+        while (readIndex < stringLength) {
+            while (readIndex < stringLength && s[readIndex] == ' ') {
+                ++readIndex;
+            }
+          
+            if (readIndex < stringLength) {
+                if (writeIndex != 0) {
+                    s[writeIndex++] = ' ';
+                }
+              
+                int wordStartIndex = readIndex;
+              
+                while (wordStartIndex < stringLength && s[wordStartIndex] != ' ') {
+                    s[writeIndex++] = s[wordStartIndex++];
+                }
+              
+                int wordLength = wordStartIndex - readIndex;
+                reverse(s.begin() + writeIndex - wordLength, s.begin() + writeIndex);
+              
+                readIndex = wordStartIndex;
+            }
+        }
+      
+        s.erase(s.begin() + writeIndex, s.end());
+      
+        reverse(s.begin(), s.end());
+      
+        return s;
+    }
+};
