@@ -1,0 +1,37 @@
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        vector<vector<int>> adjacencylist(numCourses);
+
+        vector<int> indegree(numCourses);
+
+        for (auto& prerequisite : prerequisites) {
+            int course = prerequisite[0];
+            int prereqcourse = prerequisite[1];
+
+            adjacencylist[prereqcourse].push_back(course);
+
+            ++indegree[course];
+        }
+
+        queue<int> processQueue;
+        for (int course = 0; course < numCourses; ++course) {
+            if (indegree[course] == 0) {
+                processQueue.push(course);
+            }
+        }
+
+        while (!processQueue.empty()) {
+            int current = processQueue.front();
+            processQueue.pop();
+            --numCourses;
+
+            for (int dependent : adjacencylist[current]) {
+                if (--indegree[dependent] == 0) {
+                    processQueue.push(dependent);
+                }
+            }
+        }
+        return numCourses == 0;
+    }
+};
