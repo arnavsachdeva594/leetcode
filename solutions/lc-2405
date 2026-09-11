@@ -1,0 +1,18 @@
+class Solution {
+public:
+    int partitionString(string s) {
+        int count = 1;
+        int mask = 0;
+
+        for (char& current:s) {
+            int pos = current - 'a';
+
+            if ((mask >> pos) & 1) {
+                count++;
+                mask = 0;
+            }
+            mask |= (1 << pos);
+        }
+        return count;
+    }
+};
